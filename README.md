@@ -3,9 +3,10 @@
 
 1. docker-compose up --build
 2. cp .env.example .env
-3. docker exec php-api php artisan migrate
-4. simple tests: docker exec php-api php artisan test
-5. Access to api: http://127.0.0.1:8000/api/employee
+3. docker exec php-api composer install
+4. docker exec php-api php artisan migrate
+5. simple tests: docker exec php-api php artisan test
+6. Access to api: http://127.0.0.1:8000/api/employee
 
 
 # Api endoints: 
