@@ -1,0 +1,45 @@
+version: '3.9'
+
+networks:
+    api-network:
+        driver: bridge
+
+services:
+    php:
+        build: .
+        container_name: php-api
+        restart: always
+        volumes:
+            - .:/var/www/app
+        networks:
+            - api-network
+
+    nginx:
+        image: nginx:latest
+        container_name: nginx-api
+        ports:
+            - "8000:80"
+            - "443:443"
+        volumes:
+            - ./php/nginx.conf:/etc/nginx/nginx.conf
+            - .:/var/www/app
+        depends_on:
+            - php
+        networks:
+            - api-network
+
+    mysql:
+        image: mysql:8.0
+        container_name: mysql_api
+        environment:
+            - "MYSQL_DATABASE=employees_api"
+            - "MYSQL_ROOT_PASSWORD=password"
+        volumes:
+            - mysql-data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - api-network
+
+volumes:
+    mysql-data:
