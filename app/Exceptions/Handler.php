@@ -2,15 +2,14 @@
 
 namespace App\Exceptions;
 
-use Error;
-use ErrorException;
-use Illuminate\Database\QueryException;
+use App\Traits\ResponseJson;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
+    use ResponseJson;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -45,26 +44,14 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if($exception instanceof ModelNotFoundException) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ], 404);
-        } elseif($exception instanceof Error) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ], 500);
-        } elseif($exception instanceof QueryException) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ], 500);
-        } elseif($exception instanceof ErrorException) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ], 500);
+        if (method_exists($exception, 'getStatusCode')) {
+            $statusCode = $exception->getStatusCode();
+        } else {
+            $statusCode = 500;
         }
 
-        return response()->json([
-            'message' => $exception->getMessage() ?? 'Something went wrong',
-        ], 500);
+        $message = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();
+
+        return $this->error($message, $statusCode);
     }
 }
