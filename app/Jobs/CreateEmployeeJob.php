@@ -6,26 +6,22 @@ use App\Models\Employee;
 
 final class CreateEmployeeJob
 {
-    /**
-        * @var array
-     */
-    private array $validatedData;
+	private array $validatedData;
 
-    public function __construct(array $validatedData)
-    {
-        $this->validatedData = $validatedData;
-    }
+	public function __construct(array $validatedData)
+	{
+		$this->validatedData = $validatedData;
+	}
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): Employee
-    {
-        $employeesModel = new Employee();
-        $employeesModel->fill($this->validatedData);
-        $employeesModel->save();
+	/**
+	 * Execute the job.
+	 */
+	public function handle(): Employee
+	{
+		$employeesModel = new Employee();
+		$employeesModel->fill($this->validatedData);
+		$employeesModel->save();
 
-        return $employeesModel;
-    }
-
+		return $employeesModel;
+	}
 }

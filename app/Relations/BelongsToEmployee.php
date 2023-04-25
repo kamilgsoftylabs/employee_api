@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait BelongsToEmployee
 {
-    /**
-     * Has many delegations.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class);
-    }
+	/**
+	 * Has many delegations.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function employee(): BelongsTo
+	{
+		return $this->belongsTo(Employee::class);
+	}
 }
