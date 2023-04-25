@@ -1,7 +1,7 @@
 # employee_api
 
 
-1. docker-compose up
+1. docker-compose up --build
 2. cp .env.example .env
 3. docker exec php-api php artisan migrate
 4. simple tests: docker exec php-api php artisan test
