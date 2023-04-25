@@ -28,9 +28,9 @@ class EmployeeRequestsTest extends TestCase
 
         $response->assertStatus(200);
 
-        $getUser = $this->post("/api/employee");
+        $getEmployee = $this->post("/api/employee");
 
-        $decodeEmployeeId = json_decode($getUser->getContent())->id;
+        $decodeEmployeeId = json_decode($getEmployee->getContent())->id;
 
         if($decodeEmployeeId) {
             $payload = [
