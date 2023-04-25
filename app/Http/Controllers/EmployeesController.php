@@ -20,7 +20,7 @@ class EmployeesController extends Controller
 	public function store(CreateEmployeeRequest $request)
 	{
 		// Get validated data from request.
-		$data = $request->validated();
+		$validatedData = $request->validated();
 
         // If payload is empty then return latest id of stored employee.
 		if ($request->isNotFilled('name')) {
@@ -30,7 +30,7 @@ class EmployeesController extends Controller
 		}
 
 		// Dispatch job to store employee in storage.
-		$employee = $this->dispatchSync(new CreateEmployeeJob($data));
+		$employee = $this->dispatchSync(new CreateEmployeeJob($validatedData));
 
         // Return response.
 		return $this->success('Employee deleted successfully.', $employee->toArray());

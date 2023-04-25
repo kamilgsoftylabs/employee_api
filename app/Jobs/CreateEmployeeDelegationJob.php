@@ -27,20 +27,20 @@ final class CreateEmployeeDelegationJob
     public function handle(): EmployeeDelegations
     {
         // Create new delegation.
-        $employeeDelegations = new EmployeeDelegations();
+        $employeeDelegationsModel = new EmployeeDelegations();
 
-        $employeeDelegations->fill($this->validatedData);
-        $employeeDelegations->employee_id = $this->employee->id;
-        $employeeDelegations->currency = 'PLN';
+        $employeeDelegationsModel->fill($this->validatedData);
+        $employeeDelegationsModel->employee_id = $this->employee->id;
+        $employeeDelegationsModel->currency = 'PLN';
 
         // Calculate amount due.
-        $employeeDelegations->amount_due = $this->calculateAmountDue();
+        $employeeDelegationsModel->amount_due = $this->calculateAmountDue();
 
         // Save delegation.
-        $employeeDelegations->save();
+        $employeeDelegationsModel->save();
 
         // Return delegation with specified fields.
-        return $employeeDelegations->select('start_date', 'end_date', 'country', 'amount_due', 'currency')
+        return $employeeDelegationsModel->select('start_date', 'end_date', 'country', 'amount_due', 'currency')
             ->get()->last();
     }
 

@@ -13,7 +13,7 @@ final class EmployeeDelegationsQueries
      */
     public static function getDelegationsForEmployee(Employee $employee): Collection
     {
-        return EmployeeDelegations::where('employee_id', $employee->id)
+        return $employee->delegations()
             ->select('start_date', 'end_date', 'country', 'amount_due', 'currency')
             ->get();
     }

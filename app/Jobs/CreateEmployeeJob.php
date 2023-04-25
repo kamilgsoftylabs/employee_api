@@ -9,11 +9,11 @@ final class CreateEmployeeJob
     /**
         * @var array
      */
-    private array $data;
+    private array $validatedData;
 
-    public function __construct(array $data)
+    public function __construct(array $validatedData)
     {
-        $this->data = $data;
+        $this->validatedData = $validatedData;
     }
 
     /**
@@ -22,7 +22,7 @@ final class CreateEmployeeJob
     public function handle(): Employee
     {
         $employeesModel = new Employee();
-        $employeesModel->fill($this->data);
+        $employeesModel->fill($this->validatedData);
         $employeesModel->save();
 
         return $employeesModel;
