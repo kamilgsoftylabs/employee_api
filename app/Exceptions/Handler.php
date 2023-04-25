@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ResponseJson;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -48,6 +49,14 @@ class Handler extends ExceptionHandler
             $statusCode = $exception->getStatusCode();
         } else {
             $statusCode = 500;
+        }
+
+        if($exception instanceof ModelNotFoundException) {
+            $statusCode = 404;
+        }
+
+        if($exception instanceOf \TypeError) {
+            $statusCode = 412;
         }
 
         $message = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();

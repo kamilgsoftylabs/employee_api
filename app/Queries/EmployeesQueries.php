@@ -12,8 +12,8 @@ final class EmployeesQueries
      *
      * @return mixed
      */
-    public static function getLast(): int|null
+    public static function getLast(): ?Employee
     {
-        return Employee::get()->last()->id;
+        return Employee::get()->last();
     }
 }

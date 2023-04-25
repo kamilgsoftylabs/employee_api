@@ -25,7 +25,7 @@ class EmployeesController extends Controller
         // If payload is empty then return latest id of stored employee.
 		if ($request->isNotFilled('name')) {
 			return response()->json([
-				'id' => EmployeesQueries::getLast(),
+				'id' => EmployeesQueries::getLast()->id ?? null,
 			]);
 		}
 
